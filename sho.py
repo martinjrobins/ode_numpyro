@@ -32,6 +32,7 @@ def model(ts, y=None):
     """
     # initial population
     y0 = numpyro.sample("y0", dist.Uniform(-1., 5.), sample_shape=(2,))
+
     theta = numpyro.sample("theta", dist.Uniform(0., 2.))
 
     # integrate dy/dt
@@ -57,7 +58,6 @@ def main(args):
     plt.plot(ts, data)
     plt.savefig('data.pdf')
 
-    # use dense_mass for better mixing rate
     mcmc = MCMC(NUTS(model),
                 args.num_warmup, args.num_samples, num_chains=args.num_chains,
                 progress_bar=True)
